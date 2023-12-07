@@ -62,15 +62,16 @@ export const getAllFiles = async(req, res) =>{
 
 export const destroyFile = async(req, res) =>{
   const { id } = req.params;
-
-  const filePath = `./src/public/csv/${id}.${'csv' || 'txt'}`
-  await fsp.unlink(filePath)
+  try {
+    const directory = `./src/public/csv/`;
+    const absoluteRoot = path.join(directory, id)+'.csv';
+    await fsp.unlink(absoluteRoot)
     .then(() => {
       return res.status(204).end()
-    }).catch((err) => {
-      res.status(404).json({error: "No se encontró el archivo"})
-      console.error(err);
     })
+  } catch (error) {
+    res.status(500).json(error)
+  }
 }
 
 export const getLocationJSON = async(req,res) =>{
