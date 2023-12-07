@@ -34,7 +34,7 @@ export const showFileLocation = async(req, res) =>{
 }
 
 export const getAllFiles = async(req, res) =>{
-  const directory = path.resolve('src')+'/public/csv/';
+  const directory = './src/public/csv/';
   const allFiles = []; 
 
   try {
