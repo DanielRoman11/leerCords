@@ -1,10 +1,7 @@
 import fs from 'fs';
 import fsp from 'fs/promises';
-import path, { resolve } from "path";
+import path from "path";
 import { getDirectionObj } from '../functions/direcciones.js';
-import csv from "csv-parser";
-import { rejects } from 'assert';
-import { error, info } from 'console';
 
 export const uploadDocs = (req, res) =>{
   const file = req.file;
@@ -28,7 +25,6 @@ export const getAllFiles = async(req, res) =>{
 
       objFile.content = content;
       allFiles.push(objFile)
-
     }
 
     console.log(allFiles);
@@ -73,9 +69,6 @@ export const getFileLocationsJSON = async(req, res) =>{
   const directory = `./src/public/csv/`;
 
   try {
-    const files = await fsp.readdir(directory);
-    const locationArr = new Array();
-
     const absoluteRoot = path.join(directory, id)+'.csv';
     console.log(absoluteRoot);
 
