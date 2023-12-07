@@ -63,8 +63,10 @@ export const getAllFiles = async(req, res) =>{
 export const destroyFile = async(req, res) =>{
   const { id } = req.params;
   const directory = path.resolve('src')+'/public/csv/';
+  const absoluteRoot = path.join(directory, id)+'.csv';
   try {
-    const absoluteRoot = path.join(directory, id)+'.csv';
+    if(!fs.existsSync(absoluteRoot)) return res.status(404).json({error: "Archivo no encontrado"});
+    
 
     await fsp.unlink(absoluteRoot)
     .then(() => {
