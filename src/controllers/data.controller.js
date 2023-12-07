@@ -34,7 +34,7 @@ export const showFileLocation = async(req, res) =>{
 }
 
 export const getAllFiles = async(req, res) =>{
-  const directory = `./src/public/csv/`;
+  const directory = path.resolve('public')+'/csv/';
   const allFiles = []; 
 
   try {
@@ -63,10 +63,9 @@ export const getAllFiles = async(req, res) =>{
 export const destroyFile = async(req, res) =>{
   const { id } = req.params;
   try {
-    const directory = `./src/public/csv/`;
+    const directory = path.resolve('public')+'/csv/';
     const absoluteRoot = path.join(directory, id)+'.csv';
 
-    await fsp.chmod(absoluteRoot, 0o666);
     await fsp.unlink(absoluteRoot)
     .then(() => {
       return res.status(204).end()
@@ -93,7 +92,7 @@ export const getLocationJSON = async(req,res) =>{
 
 export const getFileLocationsJSON = async(req, res) =>{
   const { id } = req.params;
-  const directory = `./src/public/csv/`;
+  const directory = path.resolve('public')+'/csv/';
 
   try {
     const absoluteRoot = path.join(directory, id)+'.csv';
