@@ -45,3 +45,11 @@
   - `lng` (Tipo: Número) - Longitud de la ubicación.
 - **Controlador:**
   - `getLocationJSON` - Obtiene información de ubicación a partir de coordenadas.
+
+## Contenido del CSV
+| latitud | longitud |
+|-----:|------|
+|-74.081703794835|4.610072850981|
+|double...|double...|
+|double...|double...|
+
