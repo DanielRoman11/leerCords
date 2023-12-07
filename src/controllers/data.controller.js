@@ -3,6 +3,8 @@ import fsp from 'fs/promises';
 import path from "path";
 import { getDirectionObj } from '../functions/direcciones.js';
 
+const actualDir = path.resolve();
+
 export const showFileLocation = async(req, res) =>{
   const { route } = req.docsroot;
 
@@ -34,7 +36,7 @@ export const showFileLocation = async(req, res) =>{
 }
 
 export const getAllFiles = async(req, res) =>{
-  const directory = './src/public/csv/';
+  const directory = path.join(actualDir,'src','public','csv');
   const allFiles = []; 
 
   try {
