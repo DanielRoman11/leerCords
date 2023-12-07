@@ -12,7 +12,7 @@ routes.post('/files', upload.single('file'), uploadDocs, showFileLocation);
 routes.get('/files', getAllFiles);
 routes.get('/files/:id', getFileLocationsJSON);
 
-//! WARNING! This routes delete the files/folder
+//! WARNING! This routes delete files/folder
 routes.delete('/files/:id', destroyFile);
 routes.delete('/files/', destroyAllFiles);
 

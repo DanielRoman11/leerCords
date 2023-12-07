@@ -2,89 +2,89 @@
 
 Este proyecto se basa en Node.js y Express para crear una API que aborda la subida y procesamiento de archivos CSV, así como la obtención de información de ubicación a partir de coordenadas geográficas. A continuación, se presenta un breve resumen de las principales funcionalidades:
 
-## 1. Subir Archivos
-
-- **Ruta:** `/files` (POST)
 - Permite la subida de archivos CSV.
 - Utiliza middleware para gestionar la subida y procesamiento de archivos.
 - Muestra la ubicación del archivo después de la subida.
-
-## 2. Obtener Lista de Archivos
-
-- **Ruta:** `/files` (GET)
 - Retorna una lista de todos los archivos subidos.
-
-## 3. Obtener Ubicaciones desde Archivo
-
-- **Ruta:** `/files/:id` (GET)
 - Permite obtener información de ubicación desde un archivo específico mediante su identificador único.
-
-## 4. Eliminar Archivo
-
-- **Ruta:** `/files/:id` (DELETE)
 - Permite eliminar un archivo específico utilizando su identificador único.
-
-## 5. Obtener Ubicación desde Coordenadas
-
-- **Ruta:** `/coords/:lat/:lng` (GET)
 - Retorna información de ubicación a partir de las coordenadas de latitud y longitud proporcionadas.
 
 Este proyecto se enfoca en la gestión de archivos CSV y la obtención de datos geográficos, proporcionando una API simple pero efectiva para realizar estas operaciones.
 
 
-
 # Documentación de Rutas
+## Upload a CSV File to Cloudinary
 
-## Archivos
+**Endpoint:** `POST /files`
 
-### Subir Archivo
-- **Método:** POST
-- **Ruta:** `/files`
-- **Parámetros:**
-  - `file` (Tipo de archivo: CSV - [UTF-8]) - Archivo a subir
-- **Middleware:**
-  - `upload` - Middleware para manejar la subida de archivos.
-  - `uploadDocs` - Middleware para procesar la subida de documentos.
-- **Controlador:**
-  - `showFileLocation` - Muestra la ubicación del archivo después de la subida.
+**Description:** Uploads a CSV file to Cloudinary.
 
-### Obtener Todos los Archivos
-- **Método:** GET
-- **Ruta:** `/files`
-- **Controlador:**
-  - `getAllFiles` - Obtiene la lista de todos los archivos.
+**Request:**
+- Method: `POST`
+- Path: `/files`
+- Parameters:
+  - `file`: The CSV file to be uploaded.
+- FileRequirement: `UTF-8` mandatory
 
-### Obtener Ubicaciones desde Archivo
-- **Método:** GET
-- **Ruta:** `/files/:id`
-- **Parámetros:**
-  - `id` (Tipo: String) - Identificador único del archivo.
-- **Controlador:**
-  - `getFileLocationsJSON` - Obtiene las ubicaciones desde un archivo específico.
+**Middleware:**
+- `upload.single('file')`: Handles the file upload.
+- `uploadDocs`: Middleware for uploading documentation.
+- `showFileLocation`: Middleware to display the file location.
 
-### Eliminar Archivo
-- **Método:** DELETE
-- **Ruta:** `/files/:id`
-- **Parámetros:**
-  - `id` (Tipo: String) - Identificador único del archivo.
-- **Controlador:**
-  - `destroyFile` - Elimina un archivo específico.
+---
 
-## Coordenadas
+## Get Information from Files
 
-### Obtener Ubicación desde Coordenadas
-- **Método:** GET
-- **Ruta:** `/coords/:lat/:lng`
-- **Parámetros:**
-  - `lat` (Tipo: Número) - Latitud de la ubicación.
-  - `lng` (Tipo: Número) - Longitud de la ubicación.
-- **Controlador:**
-  - `getLocationJSON` - Obtiene información de ubicación a partir de coordenadas.
+**Endpoint:** `GET /files`
 
-## Contenido del CSV
-| latitud | longitud |
-|-----:|------|
-|-74.081703794835|4.610072850981|
-|double...|double...|
-|double...|double...|
+**Description:** Retrieves information about uploaded files.
 
+**Request:**
+- Method: `GET`
+- Path: `/files`
+
+---
+
+## Get Location Information from a File
+
+**Endpoint:** `GET /files/:id`
+
+**Description:** Retrieves location information from a specific file.
+
+**Request:**
+- Method: `GET`
+- Path: `/files/:id`
+- Parameters:
+  - `id`: The ID of the file.
+
+---
+
+## WARNING! Routes for File Deletion
+
+**Endpoints:**
+1. `DELETE /files/:id`: Deletes a specific file.
+2. `DELETE /files/`: Deletes all files.
+
+**Description:** Deletes files or the entire folder. Use with caution.
+
+**Request:**
+- Method: `DELETE`
+- Path:
+  - `/files/:id` for a specific file deletion.
+  - `/files/` for deleting all files.
+
+---
+
+## SEARCH Search according to specified coordinates
+
+**Endpoint:** `GET /coords/:lat/:lng`
+
+**Description:** Search for location information based on specified coordinates.
+
+**Request:**
+- Method: `GET`
+- Path: `/coords/:lat/:lng`
+- Parameters:
+  - `lat`: Latitude value.
+  - `lng`: Longitude value.
