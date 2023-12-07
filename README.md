@@ -1,3 +1,38 @@
+# Resumen del Proyecto
+
+Este proyecto se basa en Node.js y Express para crear una API que aborda la subida y procesamiento de archivos CSV, así como la obtención de información de ubicación a partir de coordenadas geográficas. A continuación, se presenta un breve resumen de las principales funcionalidades:
+
+## 1. Subir Archivos
+
+- **Ruta:** `/files` (POST)
+- Permite la subida de archivos CSV.
+- Utiliza middleware para gestionar la subida y procesamiento de archivos.
+- Muestra la ubicación del archivo después de la subida.
+
+## 2. Obtener Lista de Archivos
+
+- **Ruta:** `/files` (GET)
+- Retorna una lista de todos los archivos subidos.
+
+## 3. Obtener Ubicaciones desde Archivo
+
+- **Ruta:** `/files/:id` (GET)
+- Permite obtener información de ubicación desde un archivo específico mediante su identificador único.
+
+## 4. Eliminar Archivo
+
+- **Ruta:** `/files/:id` (DELETE)
+- Permite eliminar un archivo específico utilizando su identificador único.
+
+## 5. Obtener Ubicación desde Coordenadas
+
+- **Ruta:** `/coords/:lat/:lng` (GET)
+- Retorna información de ubicación a partir de las coordenadas de latitud y longitud proporcionadas.
+
+Este proyecto se enfoca en la gestión de archivos CSV y la obtención de datos geográficos, proporcionando una API simple pero efectiva para realizar estas operaciones.
+
+
+
 # Documentación de Rutas
 
 ## Archivos
