@@ -4,13 +4,10 @@ import path from "path";
 import { getDirectionObj } from '../functions/direcciones.js';
 
 export const showFileLocation = async(req, res) =>{
+  if(req.fileerror) return res.status(400).json({error: req.fileerror})
   const { route } = req.docsroot;
 
   try {
-    if(!fs.existsSync(route)){
-      return res.status(404).json({error: "Archivo no encontrado"});
-    }
-
     let data = await fsp.readFile(route, {encoding: 'utf-8'});
     data = data.replace(/^\ufeff/, '').trim();
 
@@ -64,6 +61,7 @@ export const destroyFile = async(req, res) =>{
   const { id } = req.params;
   const directory = './src/public/csv/';
   const absoluteRoot = path.join(directory, id)+'.csv';
+  console.log(absoluteRoot)
   try {
     if(!fs.existsSync(absoluteRoot)) return res.status(404).json({error: "Archivo no encontrado"});
     

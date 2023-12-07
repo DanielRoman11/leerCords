@@ -1,14 +1,17 @@
-import path from "path";
+import cloudinary from "../utils/cloudinary.js";
 
-export const uploadDocs = (req, res, next) =>{
+export const uploadDocs = async(req, res, next) =>{
   try {
-    const file = req.file; 
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: 'csv/',
+      format: ''
+    });
     
-    if(file)
-      req.docsroot = {route: path.join(file.destination, file.filename)}
+    console.log(result)
+    res.status(201).json(result)
     next();
   } catch (error) {
-    console.error("Algo salio mal!",error);
+    console.error(error);
     return res.status(500).send(error)
   }
 }
