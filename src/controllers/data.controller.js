@@ -65,6 +65,8 @@ export const destroyFile = async(req, res) =>{
   try {
     const directory = `./src/public/csv/`;
     const absoluteRoot = path.join(directory, id)+'.csv';
+
+    await fsp.chmod(rutaArchivo, 0o666);
     await fsp.unlink(absoluteRoot)
     .then(() => {
       return res.status(204).end()
