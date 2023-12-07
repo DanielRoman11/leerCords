@@ -4,11 +4,11 @@ import path from "path";
 import { getDirectionObj } from '../functions/direcciones.js';
 
 export const showFileLocation = async(req, res) =>{
-  if(req.fileerror) return res.status(400).json({error: req.fileerror})
-  const { route } = req.docsroot;
-
+  const { url } = req.docsroot;
   try {
-    let data = await fsp.readFile(route, {encoding: 'utf-8'});
+    const response = await fetch(url);
+    let data = await response.text();
+
     data = data.replace(/^\ufeff/, '').trim();
 
     const lines = data.split(/\r?\n/);

@@ -2,13 +2,15 @@ import cloudinary from "../utils/cloudinary.js";
 
 export const uploadDocs = async(req, res, next) =>{
   try {
+    if(req.fileerror) return res.status(400).json({error: req.fileerror})
+
     const result = await cloudinary.uploader.upload(req.file.path, {
       folder: 'csv/',
-      format: ''
+      resource_type: 'raw',
+      public_id: `${req.file.filename}`
     });
     
-    console.log(result)
-    res.status(201).json(result)
+    req.docsroot = {url: result.secure_url}
     next();
   } catch (error) {
     console.error(error);
