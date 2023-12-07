@@ -3,7 +3,7 @@ import fsp from 'fs/promises';
 import path from "path";
 import { getDirectionObj } from '../functions/direcciones.js';
 
-const directory = path.resolve('public')+'/csv/';
+const directory = path.resolve('src')+'/public/csv/';
 export const showFileLocation = async(req, res) =>{
   const { route } = req.docsroot;
 
@@ -64,7 +64,6 @@ export const getAllFiles = async(req, res) =>{
 export const destroyFile = async(req, res) =>{
   const { id } = req.params;
   try {
-    const directory = path.resolve('public')+'/csv/';
     const absoluteRoot = path.join(directory, id)+'.csv';
 
     await fsp.unlink(absoluteRoot)
