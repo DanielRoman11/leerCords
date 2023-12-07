@@ -34,13 +34,10 @@ export const showFileLocation = async(req, res) =>{
 }
 
 export const getAllFiles = async(req, res) =>{
-  const directory = path.join('src','public','csv');
+  const directory = '/csv/';
   const allFiles = []; 
 
   try {
-    if(!fs.existsSync(directory)){
-      fs.mkdirSync(directory, {recursive: true});
-    }
     const files = await fsp.readdir(directory);
     for(let file of files){
       const objFile = {};
