@@ -38,6 +38,9 @@ export const getAllFiles = async(req, res) =>{
   const allFiles = []; 
 
   try {
+    if(!fs.existsSync(directory)){
+      fs.mkdirSync(directory, {recursive: true});
+    }
     const files = await fsp.readdir(directory);
     for(let file of files){
       const objFile = {};
