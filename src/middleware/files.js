@@ -6,7 +6,7 @@ import path from "path";
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
     try {
-      const destinationPath = path.resolve('public')+'/csv/';
+      const destinationPath = path.resolve('src')+'/public/csv/';
       
       if(!fs.existsSync(destinationPath)){
         fs.mkdirSync(destinationPath, {recursive: true});

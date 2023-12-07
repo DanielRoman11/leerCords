@@ -34,7 +34,7 @@ export const showFileLocation = async(req, res) =>{
 }
 
 export const getAllFiles = async(req, res) =>{
-  const directory = '/csv/';
+  const directory = path.resolve('src')+'/public/csv/';
   const allFiles = []; 
 
   try {
@@ -77,24 +77,9 @@ export const destroyFile = async(req, res) =>{
   }
 }
 
-export const getLocationJSON = async(req,res) =>{
-  const {lat, lng} = req.params;
-  
-  if(isNaN(parseFloat(lat)) || isNaN(parseFloat(lng)) || !isFinite(lat) || !isFinite(lng)) 
-    return res.status(400).json({error: "Coordenadas invalidas"})
-  try {
-    const coords = await getDirectionObj(lat, lng);
-    
-    console.log(coords);
-    return res.status(200).send(coords);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
 export const getFileLocationsJSON = async(req, res) =>{
   const { id } = req.params;
-  const directory = path.resolve('public')+'/csv/';
+  const directory = path.resolve('src')+'/public/csv/';
 
   try {
     const absoluteRoot = path.join(directory, id)+'.csv';
@@ -121,5 +106,20 @@ export const getFileLocationsJSON = async(req, res) =>{
   catch (err){
     console.error(err);
     res.status(500).json(err);
+  }
+}
+
+export const getLocationJSON = async(req,res) =>{
+  const {lat, lng} = req.params;
+  
+  if(isNaN(parseFloat(lat)) || isNaN(parseFloat(lng)) || !isFinite(lat) || !isFinite(lng)) 
+    return res.status(400).json({error: "Coordenadas invalidas"})
+  try {
+    const coords = await getDirectionObj(lat, lng);
+    
+    console.log(coords);
+    return res.status(200).send(coords);
+  } catch (error) {
+    console.error(error);
   }
 }
