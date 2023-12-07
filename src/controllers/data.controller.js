@@ -3,10 +3,34 @@ import fsp from 'fs/promises';
 import path from "path";
 import { getDirectionObj } from '../functions/direcciones.js';
 
-export const uploadDocs = (req, res) =>{
-  const file = req.file;
-  console.log(file);
-  return res.status(201).send(file);
+export const showFileLocation = async(req, res) =>{
+  const { route } = req.docsroot;
+
+  try {
+    if(!fs.existsSync(route)){
+      return res.status(404).json({error: "Archivo no encontrado"});
+    }
+
+    let data = await fsp.readFile(route, {encoding: 'utf-8'});
+    data = data.replace(/^\ufeff/, '').trim();
+
+    const lines = data.split(/\r?\n/);
+    const table = lines.map(line => line.split(';'));
+
+    const locations = new Array();
+    for (let coords = 1; coords < table.length; coords++) {
+      const [lat, lng] = table[coords];
+      const data = await getDirectionObj(lat, lng);
+      locations.push(data);
+    }
+
+    console.log(locations);
+    res.status(200).json(locations);
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
 }
 
 export const getAllFiles = async(req, res) =>{
@@ -16,8 +40,8 @@ export const getAllFiles = async(req, res) =>{
   try {
     const files = await fsp.readdir(directory);
     for(let file of files){
-      const objFile = {}
-      objFile.name = file
+      const objFile = {};
+      objFile.name = file;
       
       let content = await fsp.readFile(path.join(directory, file), 'utf-8')
       
