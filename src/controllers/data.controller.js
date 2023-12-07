@@ -66,8 +66,11 @@ export const destroyFile = async(req, res) =>{
     cloudinary.api
       .delete_resources([`csv/${id}.csv`], 
         { type: 'upload', resource_type: 'raw' })
-      .then(console.log);      
-    res.status(204)
+      .then(data=>{
+        console.log(data);
+        res.status(204).json(data);
+      });
+    
   } catch (error) {
     res.status(500).json(error)
   }
@@ -77,8 +80,11 @@ export const destroyAllFiles = (req, res) =>{
   try {
     cloudinary.api
       .delete_folder('/csv')
-      .then(console.log);
-    res.status(204);
+      .then(data=>{
+        console.log(data);
+        res.status(204).json(data);
+      });
+    
   } catch (error) {
     console.error(error);
   }
