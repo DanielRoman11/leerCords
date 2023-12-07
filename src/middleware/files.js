@@ -17,7 +17,11 @@ const storage = multer.diskStorage({
     }
   },
   filename: function(req, file, cb) {
-    cb(null, `${nanoid(5)}${path.extname(file.originalname)}`)
+    try {
+      cb(null, `${nanoid(5)}${path.extname(file.originalname)}`)
+    } catch (error) {
+      console.error(error);
+    }
   }
 })
 

@@ -8,7 +8,7 @@ export const uploadDocs = (req, res, next) =>{
       req.docsroot = {route: path.join(file.destination, file.filename)}
     next();
   } catch (error) {
-    console.error(error);
-    return res.status(500).json(error)
+    console.error("Algo salio mal!",error);
+    return res.status(500).send(error)
   }
 }
