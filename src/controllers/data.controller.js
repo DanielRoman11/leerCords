@@ -1,13 +1,15 @@
-import fs from 'fs/promises';
-import path from "path";
+import fs from 'fs';
+import fsp from 'fs/promises';
+import path, { resolve } from "path";
 import { getDirectionObj } from '../functions/direcciones.js';
 import csv from "csv-parser";
-import { error } from 'console';
+import { rejects } from 'assert';
+import { error, info } from 'console';
 
 export const uploadDocs = (req, res) =>{
   const file = req.file;
   console.log(file);
-  return res.status(200).send(file);
+  return res.status(201).send(file);
 }
 
 export const getAllFiles = async(req, res) =>{
@@ -15,12 +17,12 @@ export const getAllFiles = async(req, res) =>{
   const allFiles = []; 
 
   try {
-    const files = await fs.readdir(directory);
+    const files = await fsp.readdir(directory);
     for(let file of files){
       const objFile = {}
       objFile.name = file
       
-      let content = await fs.readFile(path.join(directory, file), 'utf-8')
+      let content = await fsp.readFile(path.join(directory, file), 'utf-8')
       
       content = content.replace(/^\ufeff/, '')
 
@@ -42,7 +44,7 @@ export const destroyFile = async(req, res) =>{
   const { id } = req.params;
 
   const filePath = `./src/public/csv/${id}.${'csv' || 'txt'}`
-  await fs.unlink(filePath)
+  await fsp.unlink(filePath)
     .then(() => {
       return res.status(204).end()
     }).catch((err) => {
@@ -52,7 +54,7 @@ export const destroyFile = async(req, res) =>{
 }
 
 export const getLocationJSON = async(req,res) =>{
-  const {lat, lng} = req.params
+  const {lat, lng} = req.params;
   
   if(isNaN(parseFloat(lat)) || isNaN(parseFloat(lng)) || !isFinite(lat) || !isFinite(lng)) 
     return res.status(400).json({error: "Coordenadas invalidas"})
@@ -67,31 +69,33 @@ export const getLocationJSON = async(req,res) =>{
 }
 
 export const getFileLocationsJSON = async(req, res) =>{
+  const { id } = req.params;
   const directory = `./src/public/csv/`;
-  const infoArr = [];
 
   try {
-    const files = await fs.readdir(directory);
-    
-    for(let file of files){
-      const objFile = {}
-      objFile.name = file
-      
-      let absoluteRoot = await fs.readFile(path.join(directory, file), 'utf-8')
-      fs.createReadStream(absoluteRoot)
-        .pipe(csv())
-        .on('data', async row =>{
-          console.log(row);
-          const lat = row.latitud;
-          const lng = row.longitud;
+    const files = await fsp.readdir(directory);
+    const locationArr = new Array();
 
-          const directions = await getDirectionObj(lat, lng);
-          infoArr.push(directions);
-        })
-        .on('end', ()=>{
-          console.log("Direcciones obtenidas: ", directions);
-        })
+    const absoluteRoot = path.join(directory, id)+'.csv';
+    console.log(absoluteRoot);
+
+    if(!fs.existsSync(absoluteRoot)){
+      return res.status(404).json({error: "Archivo no encontrado"})
     }
+
+    let data = await fsp.readFile(absoluteRoot, {encoding: 'utf-8'});
+    data = data.replace(/^\ufeff/, '').trim();
+    const lines = data.split(/\r?\n/);
+    const table = lines.map(line => line.split(';'));
+
+    const locations = new Array();
+    for (let coords = 1; coords < table.length; coords++) {
+      const [lat, lng] = table[coords]
+      const data = await getDirectionObj(lat, lng)
+      locations.push(data.address)
+    }
+    console.log(locations);
+    res.status(200).json(locations);
   }
   catch (err){
     console.error(err);

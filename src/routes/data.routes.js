@@ -6,9 +6,11 @@ const routes = express.Router()
 
 routes.post('/files', upload.single('file'), uploadDocs);
 routes.get('/files', getAllFiles);
-routes.get('/coords/:lat/:lng', getLocationJSON);
-routes.get('/files/locations', getFileLocationsJSON);
+
+routes.get('/files/:id', getFileLocationsJSON);
 routes.delete('/files/:id', destroyFile);
+
+routes.get('/coords/:lat/:lng', getLocationJSON);
 
 
 export default routes;
