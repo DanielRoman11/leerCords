@@ -3,7 +3,7 @@ import fsp from 'fs/promises';
 import path from "path";
 import { getDirectionObj } from '../functions/direcciones.js';
 
-const directory = path.resolve('src')+'/public/csv/';
+let directory = path.resolve('public')+'/csv/';
 export const showFileLocation = async(req, res) =>{
   const { route } = req.docsroot;
 
