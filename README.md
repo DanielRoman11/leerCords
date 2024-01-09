@@ -33,7 +33,7 @@ Este proyecto se enfoca en la gestión de archivos CSV y la obtención de datos 
 - `showFileLocation`: Middleware to display the file location.
 
 **CSV Data Structure:**
-| Latitud  | Longitud |
+| Lat  | Lng |
 |----------|----------|
 | 40.7128° | -74.0060° |
 | 34.0522° | -118.2437° |
