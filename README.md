@@ -32,6 +32,14 @@ Este proyecto se enfoca en la gestión de archivos CSV y la obtención de datos 
 - `uploadDocs`: Middleware for uploading documentation.
 - `showFileLocation`: Middleware to display the file location.
 
+**CSV Data Structure:**
+| Latitud  | Longitud |
+|----------|----------|
+| 40.7128° | -74.0060° |
+| 34.0522° | -118.2437° |
+| 51.5074° | -0.1278°  |
+
+
 ---
 
 ## Get Information from Files
