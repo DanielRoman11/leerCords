@@ -16,13 +16,13 @@ Este proyecto se enfoca en la gestión de archivos CSV y la obtención de datos 
 # Documentación de Rutas
 ## Upload a CSV File to Cloudinary
 
-**Endpoint:** `POST /files`
+**Endpoint:** `POST /geo/files`
 
 **Description:** Uploads a CSV file to Cloudinary.
 
 **Request:**
 - Method: `POST`
-- Path: `/files`
+- Path: `/geo/files`
 - Parameters:
   - `file`: The CSV file to be uploaded.
 - FileRequirement: `UTF-8` mandatory
@@ -32,29 +32,37 @@ Este proyecto se enfoca en la gestión de archivos CSV y la obtención de datos 
 - `uploadDocs`: Middleware for uploading documentation.
 - `showFileLocation`: Middleware to display the file location.
 
+**CSV Data Structure:**
+| Lat  | Lng |
+|----------|----------|
+| 40.7128° | -74.0060° |
+| 34.0522° | -118.2437° |
+| 51.5074° | -0.1278°  |
+
+
 ---
 
 ## Get Information from Files
 
-**Endpoint:** `GET /files`
+**Endpoint:** `GET /geo/files`
 
 **Description:** Retrieves information about uploaded files.
 
 **Request:**
 - Method: `GET`
-- Path: `/files`
+- Path: `/geo/files`
 
 ---
 
 ## Get Location Information from a File
 
-**Endpoint:** `GET /files/:id`
+**Endpoint:** `GET /geo/files/:id`
 
 **Description:** Retrieves location information from a specific file.
 
 **Request:**
 - Method: `GET`
-- Path: `/files/:id`
+- Path: `/geo/files/:id`
 - Parameters:
   - `id`: The ID of the file.
 
@@ -63,16 +71,16 @@ Este proyecto se enfoca en la gestión de archivos CSV y la obtención de datos 
 ## WARNING! Routes for File Deletion
 
 **Endpoints:**
-1. `DELETE /files/:id`: Deletes a specific file.
-2. `DELETE /files/`: Deletes all files.
+1. `DELETE /geo/files/:id`: Deletes a specific file.
+2. `DELETE /geo/files`: Deletes all files.
 
 **Description:** Deletes files or the entire folder. Use with caution.
 
 **Request:**
 - Method: `DELETE`
 - Path:
-  - `/files/:id` for a specific file deletion.
-  - `/files/` for deleting all files.
+  - `/geo/files/:id` for a specific file deletion.
+  - `/geo/files/` for deleting all files.
 
 ---
 
@@ -84,7 +92,7 @@ Este proyecto se enfoca en la gestión de archivos CSV y la obtención de datos 
 
 **Request:**
 - Method: `GET`
-- Path: `/coords/:lat/:lng`
+- Path: `/geo/coords/:lat/:lng`
 - Parameters:
   - `lat`: Latitude value.
   - `lng`: Longitude value.
